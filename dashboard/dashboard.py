@@ -69,6 +69,7 @@ st.info("📌 Higher monthly charges increase churn probability")
 # =========================
 MODEL_PATH = os.path.join(BASE_DIR, "models", "churn_rf_model.pkl")
 model = joblib.load(MODEL_PATH)
+model_features = list(model.feature_names_in_)
 
 # =========================
 # SIDEBAR INPUTS
@@ -85,12 +86,31 @@ total = st.sidebar.number_input("Total Charges", 0.0, 10000.0, 1000.0)
 # =========================
 if st.sidebar.button("Predict"):
 
-    input_data = pd.DataFrame({
-        'SeniorCitizen': [senior],
-        'tenure': [tenure],
-        'MonthlyCharges': [monthly],
-        'TotalCharges': [total]
-    })
+    customer_dict = {
+        'SeniorCitizen': senior,
+        'tenure': tenure,
+        'MonthlyCharges': monthly,
+        'TotalCharges': total,
+        'gender': 'Male',
+        'Partner': 'No',
+        'Dependents': 'No',
+        'PhoneService': 'No',
+        'MultipleLines': 'No phone service',
+        'InternetService': 'DSL',
+        'OnlineSecurity': 'No',
+        'OnlineBackup': 'No',
+        'DeviceProtection': 'No',
+        'TechSupport': 'No',
+        'StreamingTV': 'No',
+        'StreamingMovies': 'No',
+        'Contract': 'Month-to-month',
+        'PaperlessBilling': 'Yes',
+        'PaymentMethod': 'Electronic check'
+    }
+
+    from src.predict import prepare_customer_input
+
+    input_data = prepare_customer_input(customer_dict, model_features)
 
     st.write("Input sent to model:")
     st.dataframe(input_data)

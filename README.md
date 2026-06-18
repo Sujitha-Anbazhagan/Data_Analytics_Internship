@@ -43,6 +43,37 @@ This project analyzes customer churn behavior using SQL, PostgreSQL, Python, Pan
 - Pandas
 - Matplotlib
 - Seaborn
+- Scikit-learn
+- Streamlit
+- FastAPI
 - Git
 - GitHub
 - VS Code
+
+## How to Run
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. Run the Streamlit dashboard:
+   ```bash
+   streamlit run dashboard/dashboard.py
+   ```
+3. Run the API server:
+   ```bash
+   uvicorn api.app:app --reload
+   ```
+
+## Project Components
+- `notebooks/01_EDA.ipynb`: exploratory data analysis and visualization
+- `notebooks/02_model_building.ipynb`: churn model training and evaluation
+- `dashboard/dashboard.py`: Streamlit churn prediction dashboard
+- `api/app.py`: FastAPI churn prediction API
+- `src/predict.py`: shared model input preparation helper
+- `models/churn_rf_model.pkl`: serialized Random Forest churn model
+- `data/processed_churn_data.csv`: cleaned churn dataset
+
+## Notes
+- The API accepts customer feature input and returns churn probability.
+- The dashboard loads the same saved model and predicts churn from user inputs.
+- Duplicate or unused raw data files were removed to keep the repo clean.
