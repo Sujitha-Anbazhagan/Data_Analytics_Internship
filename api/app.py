@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel, Field
 import os
 from src.predict import load_model, prepare_customer_input
+from src.database import get_churn_summary
 
 app = FastAPI(title="Customer Churn API")
 
@@ -36,6 +37,16 @@ class CustomerPayload(BaseModel):
 @app.get("/")
 def root():
     return {"message": "Customer Churn API is running"}
+
+
+@app.get("/stats")
+def get_stats():
+    """Get churn statistics from PostgreSQL"""
+    try:
+        stats = get_churn_summary()
+        return {"status": "success", "data": stats}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 
 @app.post("/predict")

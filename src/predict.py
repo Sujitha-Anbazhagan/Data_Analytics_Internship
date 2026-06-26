@@ -11,7 +11,7 @@ def prepare_customer_input(customer_data: dict, model_features: list) -> pd.Data
     df = pd.DataFrame([customer_data])
     encoded = pd.get_dummies(df)
 
-    feature_vector = pd.DataFrame(0, index=[0], columns=model_features)
+    feature_vector = pd.DataFrame(0.0, index=[0], columns=model_features)
 
     for feature in numeric_features:
         if feature in df.columns:
@@ -19,6 +19,6 @@ def prepare_customer_input(customer_data: dict, model_features: list) -> pd.Data
 
     for column in encoded.columns:
         if column in feature_vector.columns:
-            feature_vector.loc[0, column] = encoded.loc[0, column]
+            feature_vector.loc[0, column] = float(encoded.loc[0, column])
 
     return feature_vector

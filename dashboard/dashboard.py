@@ -15,18 +15,36 @@ st.title("📊 Customer Churn Prediction System")
 st.markdown("### Machine Learning Powered Customer Retention Analytics")
 st.markdown("---")
 
-# Dataset Path Fix
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_PATH = os.path.join(BASE_DIR, "data", "processed_churn_data.csv")
+# Load data from PostgreSQL
+import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-df_dashboard = pd.read_csv(DATA_PATH)
+from src.database import get_churn_data
+
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))
+)
+
+try:
+    df_dashboard = get_churn_data()
+
+except Exception as e:
+    st.error(f"⚠️ Could not connect to PostgreSQL. Using CSV fallback: {e}")
+
+    DATA_PATH = os.path.join(
+        BASE_DIR,
+        "data",
+        "processed_churn_data.csv"
+    )
+
+    df_dashboard = pd.read_csv(DATA_PATH)
 
 # =========================
 # OVERVIEW
 # =========================
 st.subheader("📈 Churn Overview")
 
-churn_counts = df_dashboard["Churn"].value_counts()
+churn_counts = df_dashboard["churn"].value_counts()
 
 col1, col2 = st.columns(2)
 
@@ -45,8 +63,8 @@ st.subheader("📊 Key Business Metrics")
 col1, col2, col3, col4 = st.columns(4)
 
 total_customers = len(df_dashboard)
-churned = len(df_dashboard[df_dashboard["Churn"] == "Yes"])
-retained = len(df_dashboard[df_dashboard["Churn"] == "No"])
+churned = len(df_dashboard[df_dashboard["churn"] == "Yes"])
+retained = len(df_dashboard[df_dashboard["churn"] == "No"])
 churn_rate = (churned / total_customers) * 100
 
 col1.metric("Total Customers", total_customers)
