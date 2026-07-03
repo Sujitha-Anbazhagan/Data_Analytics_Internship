@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 import os
+import requests
 
 # Page Configuration
 st.set_page_config(
@@ -133,19 +134,37 @@ if st.sidebar.button("Predict"):
     st.write("Input sent to model:")
     st.dataframe(input_data)
 
-    prediction = model.predict(input_data)
-    probability = model.predict_proba(input_data)
+    # Call Churn API
+    response = requests.post(
+        "http://127.0.0.1:8000/predict",
+        json=customer_dict
+    )
 
-    churn_prob = probability[0][1] * 100
+
+    # Convert API response to Python dictionary
+    result = response.json()
+    
 
     st.subheader("🎯 Prediction Result")
 
-    if prediction[0] == 1:
+    if result["prediction"] == 1:
         st.error("🚨 High Risk: Customer is Likely to Churn")
         st.markdown("**Recommendation:** Offer retention discounts or support plan.")
     else:
         st.success("✅ Low Risk: Customer is Likely to Stay")
         st.markdown("**Recommendation:** Maintain service quality to retain customer.")
 
-    st.write(f"Churn Probability: {churn_prob:.2f}%")
-    st.progress(min(int(churn_prob), 100))
+    st.write(f"Churn Probability: {result['churn_probability']:.2f}%")
+    st.progress(min(int(result["churn_probability"]), 100))
+
+    # Call LTV API
+    ltv_response = requests.post(
+        "http://127.0.0.1:8000/predict_ltv",
+        json=customer_dict
+    )
+
+    ltv_result = ltv_response.json()
+
+    st.subheader("💰 Customer Lifetime Value")
+
+    st.success(f"Predicted LTV: ${ltv_result['predicted_ltv']:.2f}")
