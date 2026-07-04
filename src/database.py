@@ -45,28 +45,46 @@ class PostgreSQLConnection:
             print("✅ PostgreSQL connection closed")
 
 
-def get_churn_data() -> pd.DataFrame:
-    """Load churn data from PostgreSQL"""
-    db = PostgreSQLConnection()
-    try:
-        df = db.load_dataframe("SELECT * FROM telco_customers;")
-        return df
-    finally:
-        db.close()
+    def get_churn_data() -> pd.DataFrame:
+        """Load churn data from PostgreSQL, otherwise use CSV"""
+
+        try:
+            db = PostgreSQLConnection()
+            df = db.load_dataframe("SELECT * FROM telco_customers;")
+            db.close()
+            return df
+
+        except Exception as e:
+            print(f"Could not connect to PostgreSQL. Using CSV fallback: {e}")
+
+            csv_path = "data/telco/telco_customers.csv"
+            return pd.read_csv(csv_path)
 
 
-def get_churn_summary() -> dict:
-    """Get churn statistics from PostgreSQL"""
-    db = PostgreSQLConnection()
-    try:
-        summary_query = """
-        SELECT 
-            churn,
-            COUNT(*) as count
-        FROM telco_customers
-        GROUP BY churn;
-        """
-        df = db.load_dataframe(summary_query)
-        return df.to_dict('records')
-    finally:
-        db.close()
+    def get_churn_summary():
+
+        try:
+            db = PostgreSQLConnection()
+
+            query = """
+            SELECT churn,
+                COUNT(*) as count
+            FROM telco_customers
+            GROUP BY churn;
+            """
+
+            df = db.load_dataframe(query)
+            db.close()
+            return df.to_dict("records")
+
+        except Exception:
+
+            df = pd.read_csv("data/telco/telco_customers.csv")
+
+            summary = (
+                df.groupby("Churn")
+                .size()
+                .reset_index(name="count")
+            )
+
+            return summary.to_dict("records")
