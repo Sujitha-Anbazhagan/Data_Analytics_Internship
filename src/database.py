@@ -57,34 +57,35 @@ class PostgreSQLConnection:
         except Exception as e:
             print(f"Could not connect to PostgreSQL. Using CSV fallback: {e}")
 
-            csv_path = "data/telco/telco_customers.csv"
+            csv_path = "data/processed_churn_data.csv"
             return pd.read_csv(csv_path)
 
+ def get_churn_summary():
+    """Get churn summary from PostgreSQL or CSV"""
 
-    def get_churn_summary():
+    try:
+        db = PostgreSQLConnection()
 
-        try:
-            db = PostgreSQLConnection()
+        query = """
+        SELECT churn,
+               COUNT(*) AS count
+        FROM telco_customers
+        GROUP BY churn;
+        """
 
-            query = """
-            SELECT churn,
-                COUNT(*) as count
-            FROM telco_customers
-            GROUP BY churn;
-            """
+        df = db.load_dataframe(query)
+        db.close()
+        return df.to_dict("records")
 
-            df = db.load_dataframe(query)
-            db.close()
-            return df.to_dict("records")
+    except Exception as e:
+        print(f"Could not connect to PostgreSQL. Using CSV fallback: {e}")
 
-        except Exception:
+        df = pd.read_csv("data/processed_churn_data.csv")
 
-            df = pd.read_csv("data/telco/telco_customers.csv")
+        summary = (
+            df.groupby("churn")
+            .size()
+            .reset_index(name="count")
+        )
 
-            summary = (
-                df.groupby("Churn")
-                .size()
-                .reset_index(name="count")
-            )
-
-            return summary.to_dict("records")
+        return summary.to_dict("records")
