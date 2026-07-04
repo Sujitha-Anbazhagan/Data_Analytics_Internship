@@ -135,36 +135,25 @@ if st.sidebar.button("Predict"):
     st.dataframe(input_data)
 
     # Call Churn API
-    response = requests.post(
-        "http://127.0.0.1:8000/predict",
-        json=customer_dict
-    )
+    prediction = model.predict(input_data)[0]
 
-
-    # Convert API response to Python dictionary
-    result = response.json()
-    
+    if hasattr(model, "predict_proba"):
+        probability = model.predict_proba(input_data)[0][1] * 100
+    else:
+        probability = 0
+        
 
     st.subheader("🎯 Prediction Result")
 
-    if result["prediction"] == 1:
+    if prediction == 1:
         st.error("🚨 High Risk: Customer is Likely to Churn")
         st.markdown("**Recommendation:** Offer retention discounts or support plan.")
     else:
         st.success("✅ Low Risk: Customer is Likely to Stay")
         st.markdown("**Recommendation:** Maintain service quality to retain customer.")
 
-    st.write(f"Churn Probability: {result['churn_probability']:.2f}%")
-    st.progress(min(int(result["churn_probability"]), 100))
-
-    # Call LTV API
-    ltv_response = requests.post(
-        "http://127.0.0.1:8000/predict_ltv",
-        json=customer_dict
-    )
-
-    ltv_result = ltv_response.json()
+    st.write(f"Churn Probability: {probability:.2f}%")
+    st.progress(min(int(probability), 100))
 
     st.subheader("💰 Customer Lifetime Value")
-
-    st.success(f"Predicted LTV: ${ltv_result['predicted_ltv']:.2f}")
+    st.info("LTV prediction is available in the local FastAPI version of the project.")
