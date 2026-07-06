@@ -130,6 +130,22 @@ python -m streamlit run dashboard/dashboard.py
 
 ---
 
+## 📷 Project Screenshots
+
+### Dashboard Home
+![Dashboard Home](screenshots/dashboard_home.png)
+
+### Prediction Input
+![Prediction Input](screenshots/prediction_input.png)
+
+### Prediction Result
+![Prediction Result](screenshots/high_risk_prediction.png)
+
+### Business Metrics
+![Business Metrics](screenshots/business_metrics.png)
+
+---
+
 ## 🔮 Future Improvements
 
 * Customer Lifetime Value (LTV) prediction
