@@ -1,91 +1,153 @@
-# Customer Churn Prediction & Customer Lifetime Value (LTV)
+# 📊 Customer Churn Prediction System
 
-## Project Overview
+## 📌 Overview
 
-This project was developed as part of my Data Science Internship. It predicts whether a customer is likely to churn based on customer information and service usage. The project also analyzes customer lifetime value (LTV) to help businesses understand customer behavior and improve retention strategies.
+The Customer Churn Prediction System is a Machine Learning project developed to predict whether a telecom customer is likely to churn (leave the service). The application provides an interactive dashboard where users can enter customer details and receive a churn prediction along with the estimated probability.
 
----
-
-## Objectives
-
-- Predict customer churn using Machine Learning.
-- Analyze customer data to identify churn patterns.
-- Build an interactive dashboard using Streamlit.
-- Help businesses improve customer retention.
+The project also includes business insights that help understand customer retention patterns and support data-driven decision-making.
 
 ---
 
-## Technologies Used
+## 🚀 Features
 
-- Python
-- Pandas
-- NumPy
-- Scikit-learn
-- PostgreSQL
-- Streamlit
-- Git
-- GitHub
-
----
-
-## Machine Learning Model
-
-The project uses a Random Forest Classifier to predict customer churn based on customer information.
+* Predict customer churn using a trained Machine Learning model
+* Interactive web application built with Streamlit
+* Customer churn probability prediction
+* Business insights dashboard
+* PostgreSQL database integration
+* Automatic CSV fallback if the database is unavailable
+* Clean and user-friendly interface
 
 ---
 
-## Features
+## 🛠️ Tech Stack
 
-- Customer Churn Prediction
-- Interactive Dashboard
-- Data Visualization
-- Machine Learning Prediction
-
----
-
-## Project Workflow
-
-1. Data Collection
-2. Data Cleaning
-3. Exploratory Data Analysis (EDA)
-4. Feature Engineering
-5. Model Training
-6. Model Evaluation
-7. Streamlit Dashboard
-8. Deployment
+* Python
+* Streamlit
+* Pandas
+* NumPy
+* Scikit-learn
+* PostgreSQL
+* Joblib
+* Git & GitHub
 
 ---
 
-## Installation
+## 📁 Project Structure
 
-Clone the repository
-
-```bash
-git clone <repository-url>
+```text
+Customer-Churn-LTV-Project/
+│
+├── dashboard/
+│   └── dashboard.py
+│
+├── data/
+│   └── processed_churn_data.csv
+│
+├── models/
+│   └── churn_rf_model.pkl
+│
+├── src/
+│   ├── __init__.py
+│   ├── database.py
+│   └── predict.py
+│
+├── notebooks/
+├── requirements.txt
+├── README.md
+└── .gitignore
 ```
 
-Install the required packages
+---
+
+## ⚙️ Installation
+
+Clone the repository:
+
+```bash
+git clone <your-github-repository-url>
+```
+
+Navigate to the project folder:
+
+```bash
+cd Customer-Churn-LTV-Project
+```
+
+Create a virtual environment:
+
+```bash
+python -m venv .venv
+```
+
+Activate the virtual environment:
+
+### Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the Streamlit application
+Run the application:
 
 ```bash
-streamlit run app.py
+python -m streamlit run dashboard/dashboard.py
 ```
 
 ---
 
-## Author
+## 📊 Dashboard Features
 
-**Sujitha Anbazhagan**
-
-Data Science Intern
+* Churn overview visualization
+* Customer statistics
+* Churn rate calculation
+* Interactive prediction form
+* Churn probability display
+* Business recommendations
 
 ---
 
-## License
+## 🤖 Machine Learning Model
 
-This project is created for educational and internship purposes.
+* Algorithm: Random Forest Classifier
+* Task: Binary Classification
+* Target Variable: Customer Churn (Yes/No)
+
+---
+
+## 💡 Business Insights
+
+* Month-to-month contract customers are more likely to churn.
+* Customers with longer tenure are more likely to remain loyal.
+* Higher monthly charges are associated with increased churn risk.
+* Fiber optic customers tend to have higher churn rates.
+
+---
+
+## 🔮 Future Improvements
+
+* Customer Lifetime Value (LTV) prediction
+* Additional interactive charts and filters
+* Authentication and user management
+* REST API integration
+* Enhanced analytics dashboard
+
+---
+
+## 👩‍💻 Author
+
+**Sujitha Anbazhagan**
+
+Machine Learning & Data Analytics Project
+
+---
+
+## 📜 License
+
+This project is developed for educational and portfolio purposes.
