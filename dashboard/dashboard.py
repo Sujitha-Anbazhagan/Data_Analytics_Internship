@@ -157,3 +157,13 @@ if st.sidebar.button("Predict"):
 
     st.subheader("💰 Customer Lifetime Value")
     st.info("LTV prediction is available in the local FastAPI version of the project.")
+
+    st.subheader("Model Performance")
+
+    st.write("""
+    - Model: Random Forest Classifier
+    - Accuracy: 80%
+    - Purpose: Predict whether a customer is likely to churn.
+    - Dataset: Telco Customer Churn Dataset
+    """)
+    
