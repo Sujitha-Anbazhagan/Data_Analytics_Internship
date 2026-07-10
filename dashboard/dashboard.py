@@ -166,4 +166,13 @@ if st.sidebar.button("Predict"):
     - Purpose: Predict whether a customer is likely to churn.
     - Dataset: Telco Customer Churn Dataset
     """)
-    
+    st.markdown("---")
+    st.subheader("Business Recommendations")
+
+    st.write("""
+    - Convert month-to-month customers to long-term contracts.
+    - Focus retention campaigns on Fiber Optic customers.
+    - Encourage customers to use automatic payment methods.
+    - Monitor customers with high monthly charges.
+    - Provide loyalty offers for customers in their first 18 months.
+    """)
