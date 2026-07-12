@@ -120,6 +120,15 @@ python -m streamlit run dashboard/dashboard.py
 * Target Variable: Customer Churn (Yes/No)
 
 ---
+## 📈 Model Performance
+
+| Metric       | Value                    |
+| ------------ | ------------------------ |
+| Accuracy     | 80%                      |
+| Dataset Size | 7043 Customers           |
+| Churn Rate   | 26.5%                    |
+| Model Type   | Random Forest Classifier |
+
 
 ## 💡 Business Insights
 
@@ -129,6 +138,8 @@ python -m streamlit run dashboard/dashboard.py
 * Fiber optic customers tend to have higher churn rates.
 
 ---
+
+
 
 ## 📷 Project Screenshots
 
