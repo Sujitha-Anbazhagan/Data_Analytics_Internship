@@ -176,3 +176,7 @@ if st.sidebar.button("Predict"):
     - Monitor customers with high monthly charges.
     - Provide loyalty offers for customers in their first 18 months.
     """)
+    st.markdown("---")
+st.caption(
+    "Customer Churn & LTV Prediction Dashboard | Developed by Sujitha Anbazhagan "
+)
