@@ -180,3 +180,16 @@ if st.sidebar.button("Predict"):
 st.caption(
     "Customer Churn & LTV Prediction Dashboard | Developed by Sujitha Anbazhagan "
 )
+    st.markdown("---")
+    st.subheader("📈 Model Performance")
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric("Model", "Random Forest")
+
+    with col2:
+        st.metric("Accuracy", "80%")
+
+    with col3:
+        st.metric("Dataset Size", "7043")
